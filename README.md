@@ -8,7 +8,7 @@ Outputs a bunch of google map images for list of x,y coordinates in CSV file for
 config.json file holds below config settings:<br>API keys<br>
 output map size, magnification, type (hybrid, satellite)<p>Please set as necessary.
 <br>----------<br>
-<br>To run:<br>
+To run:<br>
 gmaps.py [sourceCSVfile.csv]<p>
 Replace with source CSV file holding x,y coordinates.<br>
 If CSV in same file as python file, can use relative path. Otherwise use absolute path.
