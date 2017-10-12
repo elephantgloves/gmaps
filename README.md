@@ -14,5 +14,8 @@ gmaps.py [sourceCSVfile.csv]<br><br>
 Replace with source CSV file holding x,y coordinates.<br>
 If CSV in same file as python file, can use relative path. Otherwise use absolute path.<br><br>
 By default outputs target html file into same directory as python file.
+--------
+Current state: minimal working version<br>
+Supports:
 
 
