@@ -1,27 +1,32 @@
 import os
 import csv
 import sys
+import json
 
-xyCSVLocation="C:xytest.csv"
+basedirectory=os.getcwd()
 
-staticAPIkey=""
-streetViewImageAPIkey=""
+xyCSVLocation=basedirectory+"/xytest.csv"
+with open(basedirectory+"/config.json", 'r') as configfile:
+    cfg = json.load(configfile)
 
-size="640x400"
-zoom="18"
-maptype="hybrid"
+staticAPIkey=cfg['API'].get("googlestatic")
+streetViewImageAPIkey=cfg['API'].get("googlestreetview")
+
+size=cfg['config'].get("size")
+zoom=cfg['config'].get("zoom")
+maptype=cfg['config'].get("maptype")
 
 header="""
 <html> 
-    <head></head>
-      <body style="width: 100%; height: 100%; margin: 0; padding: 0;"> 
-    
-    """  
+<head></head>
+<body style="width: 100%; height: 100%; margin: 0; padding: 0;"> 
+
+"""  
 
 footer="""
-      </body>
+</body>
 </html>
-       """
+"""
        
 def getxyfromCSV(CSVLocation, delimiter=","):
     """Reads CSV file with x,y coordinates and stores them in array. Default delimiter=,"""
@@ -56,7 +61,7 @@ def codeGeneratorSingleRecord(xypair, size, zoom, maptype, apikey):
     staticTagSize="&size="+size
     
     
-    staticTagend="&markers="+xypair+"&key="+apikey+"\"></img></br>"
+    staticTagend="&markers="+xypair+"&key="+apikey+"\"></img></br>\n"
     
     singleRecordTag=staticTagmaptype+staticTagcoords+ \
     staticTagzoom+staticTagSize+staticTagend
@@ -81,11 +86,9 @@ if __name__ == '__main__':
         """read csv"""
         inputarray=getxyfromCSV(csvfilelocation)
         """make codeblock"""
-        #print "codeblock", codeGenerator(header, mapBlockGenerator(inputarray), footer)
-        outputfile="C:/Users/liju/Desktop/python/js/newjstest.html"
+        outputfile=basedirectory+"/newjstest.html"
         with open(outputfile, 'w') as outputFile:
             outputFile.write(codeGenerator(header, mapBlockGenerator(inputarray), footer))
-        #for i in inputlist: outputFile.write(i.encode("utf8")+"\n")
             os.startfile(outputfile)
         
     else: 
