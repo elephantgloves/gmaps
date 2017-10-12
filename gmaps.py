@@ -52,7 +52,7 @@ def mapBlockGenerator(coordinateArray):
 
 def codeGeneratorSingleRecord(xypair, size, zoom, maptype, apikey):
     """returns html tag for a single xy record as a string"""   
-    staticTagmaptype='<img src="https://maps.googleapis.com/maps/api/staticmap?maptype='+maptype
+    staticTagmaptype=xypair+'</br>\n<img src="https://maps.googleapis.com/maps/api/staticmap?maptype='+maptype
     
     staticTagcoords="&center="+xypair
     
@@ -61,7 +61,7 @@ def codeGeneratorSingleRecord(xypair, size, zoom, maptype, apikey):
     staticTagSize="&size="+size
     
     
-    staticTagend="&markers="+xypair+"&key="+apikey+"\"></img></br>\n"
+    staticTagend="&markers="+xypair+"&key="+apikey+"\"></img></br></br>\n"
     
     singleRecordTag=staticTagmaptype+staticTagcoords+ \
     staticTagzoom+staticTagSize+staticTagend
