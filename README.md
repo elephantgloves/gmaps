@@ -4,7 +4,7 @@ Current state: minimal working version<br>
 Supports: Windows 7, python 2.7<br>
 Packages used: csv, json, os, sys
 <br>----------<br>
-Outputs a bunch of google map images for list of x,y coordinates in CSV file for (very) quick viewing of x,y locations.<br>
+Outputs a bunch of google map images for list of x,y coordinates in CSV file for (very) quick viewing of x,y locations.<p>
 config.json file holds below config settings:<br>API keys<br>
 output map size, magnification, type (hybrid, satellite)<p>Please set as necessary.
 <br>----------<br>
