@@ -1,4 +1,4 @@
 # gmaps
-なんでやねん～～
+Outputs a bunch of google map images for list of x,y coordinates in CSV file.
 
-（あとで追加します）
+Current state: minimal working version
