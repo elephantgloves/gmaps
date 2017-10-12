@@ -1,7 +1,7 @@
-import os
 import csv
-import sys
 import json
+import os
+import sys
 
 basedirectory=os.getcwd()
 
