@@ -52,8 +52,24 @@ def mapBlockGenerator(coordinateArray):
         mapBlock=mapBlock+codeGeneratorSingleRecord(xyrecord, size, zoom, maptype, staticAPIkey)        
     
     return mapBlock
+    
+def mapBlockGeneratorMM(coordinateArray):
+    """pass array of xy values to generator"""
+    mapBlock=""
+    centerxy=coordinateArray[0]
+    markerstring=generateMultipleMarkerString(coordinateArray) 
+    mapBlock=mapBlock+codeGeneratorSingleRecord(centerxy, size, zoom, maptype, staticAPIkey, markerstring=markerstring)        
+    
+    return mapBlock
 
-def codeGeneratorSingleRecord(xypair, size, zoom, maptype, apikey):
+def generateMultipleMarkerString(coordinateArray):
+    
+    multipleMarkerString=''
+    multipleMarkerString=('|').join(inputarray)
+    
+    return multipleMarkerString
+
+def codeGeneratorSingleRecord(xypair, size, zoom, maptype, apikey, markerstring=''):
     """returns html tag for a single xy record as a string"""   
     staticTagmaptype=xypair+'</br>\n<img src="https://maps.googleapis.com/maps/api/staticmap?maptype='+maptype
     
@@ -61,10 +77,15 @@ def codeGeneratorSingleRecord(xypair, size, zoom, maptype, apikey):
     
     staticTagzoom="&zoom="+zoom
     
-    staticTagSize="&size="+size
+    staticTagSize="&size="+size   
     
+    if markerstring=='': 
+        staticTagend="&markers="+xypair+"&key="+apikey+"\"></img></br></br>\n"
+        # print staticTagend
+    else: 
+        staticTagend="&markers="+markerstring+"&key="+apikey+"\"></img></br></br>\n"
+        # print staticTagend
     
-    staticTagend="&markers="+xypair+"&key="+apikey+"\"></img></br></br>\n"
     
     singleRecordTag=staticTagmaptype+staticTagcoords+ \
     staticTagzoom+staticTagSize+staticTagend
@@ -81,7 +102,6 @@ def codeGenerator(header, mapblock, footer):
     finalHTMLblock=header+mapblock+footer
     return finalHTMLblock
 
-
 if __name__ == '__main__':
     location=sys.argv
     if len(location)>1:
@@ -89,10 +109,17 @@ if __name__ == '__main__':
         """read csv"""
         inputarray=getxyfromCSV(csvfilelocation)
         """make codeblock"""
-        outputfile=basedirectory+"/newjstest.html"
-        with open(outputfile, 'w') as outputFile:
-            outputFile.write(codeGenerator(header, mapBlockGenerator(inputarray), footer))
-            os.startfile(outputfile)
+        outputfile=basedirectory+"/outputMapFile.html"
+        with open(outputfile, 'w') as outputFile:           
+            if len(location)>2:
+                print "Set to run with multiple markers on one map\nIf multiple markers not visible, please lower magnification in config"
+                outputFile.write(codeGenerator(header, mapBlockGeneratorMM(inputarray), footer))
+                os.startfile(outputfile)
+            
+        
+            else:
+                outputFile.write(codeGenerator(header, mapBlockGenerator(inputarray), footer))
+                os.startfile(outputfile)
         
     else: 
         print "specify a CSV file in runtime arguments"
